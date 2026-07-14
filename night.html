@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Ночь Ниндзя</title>
+    <style>
+        /* Глобальные стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Arial', system-ui, sans-serif;
+        }
+
+        body {
+            background: #0a0a0f;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 480px;
+            width: 100%;
+            background: linear-gradient(145deg, #14141e, #1a1a2e);
+            border-radius: 40px;
+            padding: 24px 20px 32px;
+            box-shadow: 0 20px 60px rgba(255, 50, 100, 0.15), 0 0 40px rgba(200, 30, 200, 0.1);
+            border: 1px solid rgba(255, 100, 200, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Аниме-звёздочки фон */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: radial-gradient(2px 2px at 20px 30px, #f0a0ff, rgba(0,0,0,0)),
+                            radial-gradient(2px 2px at 40px 70px, #ffb0d0, rgba(0,0,0,0)),
+                            radial-gradient(1px 1px at 90px 40px, #a0d0ff, rgba(0,0,0,0));
+            background-size: 200px 200px;
+            opacity: 0.15;
+            pointer-events: none;
+        }
+
+        /* ========== ЭКРАН 1: ВХОД НИНДЗЯ ========== */
+        #loginScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 520px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ninja-icon {
+            font-size: 80px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 20px #ff66aa);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        #loginScreen h1 {
+            color: #ffccff;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            text-shadow: 0 0 20px #ff44aa, 0 0 60px #aa44ff;
+            margin-bottom: 6px;
+        }
+
+        #loginScreen .sub {
+            color: #aa88cc;
+            font-size: 14px;
+            letter-spacing: 6px;
+            margin-bottom: 30px;
+            border-bottom: 1px dashed #664488;
+            padding-bottom: 12px;
+            width: 80%;
+        }
+
+        .shuriken {
+            font-size: 28px;
+            margin: 0 6px;
+        }
+
+        #loginScreen label {
+            color: #d0b0f0;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+        #ninjaNameInput {
+            background: #0d0d18;
+            border: 2px solid #553377;
+            border-radius: 60px;
+            padding: 14px 24px;
+            width: 90%;
+            max-width: 300px;
+            color: #f0e0ff;
+            font-size: 18px;
+            text-align: center;
+            outline: none;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+        }
+
+        #ninjaNameInput:focus {
+            border-color: #ff66aa;
+            box-shadow: 0 0 30px rgba(255, 80, 180, 0.2);
+        }
+
+        #ninjaNameInput::placeholder {
+            color: #554466;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff3388, #cc44ff);
+            border: none;
+            border-radius: 60px;
+            padding: 14px 40px;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(200, 50, 200, 0.4);
+            transition: all 0.3s;
+            width: 90%;
+            max-width: 300px;
+            margin-top: 10px;
+            text-transform: uppercase;
+        }
+
+        .btn-primary:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 15px rgba(200, 50, 200, 0.2);
+        }
+
+        /* ========== ЭКРАН 2: ОСНОВНОЙ ========== */
+        #mainScreen {
+            display: none;
+            flex-direction: column;
+            gap: 22px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #332244;
+            padding-bottom: 12px;
+        }
+
+        .header .ninja-name-display {
+            color: #ff99dd;
+            font-size: 14px;
+            font-weight: 600;
+            background: #1f1a2e;
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid #664488;
+        }
+
+        .header .ninja-name-display span {
+            color: #ffffff;
+        }
+
+        .timer-box {
+            background: #1a1128;
+            padding: 6px 14px;
+            border-radius: 40px;
+            border: 1px solid #7733aa;
+            color: #f0d0ff;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .timer-box span {
+            color: #ff77bb;
+            font-size: 16px;
+        }
+
+        /* Текст миссии */
+        .mission-text {
+            background: rgba(20, 10, 35, 0.7);
+            border-left: 4px solid #ff44aa;
+            padding: 14px 16px;
+            border-radius: 16px;
+            color: #ddd0f0;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .mission-text strong {
+            color: #ffbbee;
+        }
+
+        .mission-text .highlight {
+            color: #ffdd77;
+            font-weight: 700;
+        }
+
+        .address-block {
+            background: #11101f;
+            padding: 16px;
+            border-radius: 20px;
+            border: 1px dashed #774499;
+            text-align: center;
+            color: #ccaadd;
+        }
+
+        .address-block .addr {
+            font-size: 20px;
+            font-weight: 800;
+            color: #ffb3e6;
+            margin: 4px 0;
+        }
+
+        .address-block .note {
+            font-size: 13px;
+            color: #8877aa;
+        }
+
+        .quote-telegram {
+            background: #1d1a2e;
+            padding: 12px 16px;
+            border-radius: 60px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #3366aa;
+            color: #88ccff;
+            margin: 4px 0;
+        }
+
+        .quote-telegram span {
+            font-style: italic;
+            color: #ffaa88;
+        }
+
+        /* Блок вопросов */
+        .questions-block {
+            background: #141025;
+            border-radius: 28px;
+            padding: 16px 14px;
+            border: 1px solid #553388;
+        }
+
+        .questions-block .q-title {
+            color: #ffaadd;
+            font-weight: 800;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 14px;
+            letter-spacing: 2px;
+        }
+
+        .question-item {
+            background: #0f0c1e;
+            border-radius: 16px;
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            border-left: 3px solid #8844bb;
+        }
+
+        .question-item .q-text {
+            color: #e0d0f0;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .q-buttons {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .btn-yes, .btn-no {
+            padding: 8px 28px;
+            border-radius: 40px;
+            border: none;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #22cc88, #22aa99);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(34, 200, 120, 0.3);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #665577, #443355);
+            color: #ccbbdd;
+        }
+
+        .btn-yes:active { transform: scale(0.94); }
+        .btn-no:active { transform: scale(0.94); }
+
+        .q-feedback {
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            min-height: 24px;
+            color: #ffcc88;
+        }
+
+        .q-feedback .cute { color: #ff99cc; }
+        .q-feedback .sus { color: #99ccff; }
+
+        /* Родители */
+        .parents-note {
+            background: #1f1428;
+            border-radius: 20px;
+            padding: 12px 16px;
+            text-align: center;
+            border: 1px solid #8855aa;
+            color: #ddccee;
+            font-size: 14px;
+        }
+
+        .parents-note strong {
+            color: #ffbb77;
+        }
+
+        /* Кнопка выхода (скрытая) */
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #443355;
+            color: #665577;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 12px;
+            margin-top: 6px;
+            cursor: pointer;
+            width: fit-content;
+            align-self: center;
+        }
+
+        /* Адаптив */
+        @media (max-width: 420px) {
+            .container { padding: 16px; }
+            #loginScreen h1 { font-size: 28px; }
+            .btn-primary { font-size: 16px; padding: 12px 20px; }
+            .question-item .q-text { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="app">
+
+    <!-- ===== ЭКРАН ВХОДА ===== -->
+    <div id="loginScreen">
+        <div class="ninja-icon">🥷</div>
+        <h1>НОЧЬ НИНДЗЯ</h1>
+        <div class="sub"><span class="shuriken">✦</span> СЕКРЕТНАЯ МИССИЯ <span class="shuriken">✦</span></div>
+
+        <label for="ninjaNameInput">ВВЕДИ КОДОВОЕ ИМЯ</label>
+        <input type="text" id="ninjaNameInput" placeholder="Например: Тень-сан" autocomplete="off">
+        <button class="btn-primary" id="enterBtn">ВОЙТИ В ТЕНЬ</button>
+        <div style="color:#554466; font-size:12px; margin-top:16px;">только для избранных агентов</div>
+    </div>
+
+    <!-- ===== ОСНОВНОЙ ЭКРАН ===== -->
+    <div id="mainScreen">
+        <!-- Шапка -->
+        <div class="header">
+            <div class="ninja-name-display">🥷 <span id="displayName">—</span></div>
+            <div class="timer-box">⏳ <span id="timerDisplay">—</span></div>
+        </div>
+
+        <!-- Миссия -->
+        <div class="mission-text">
+            <strong>📜 Задание:</strong> Явиться <span class="highlight">22 июля в 17:00</span>.<br>
+            Вооружение: <strong>пижама, зубная щётка, паста</strong> и боевое настроение.<br>
+            В <span class="highlight">00:00</span> 23 июля — <strong>удар тортом</strong> (финальный босс).<br>
+            <span style="color:#bb99dd;">⚡ Выжить до утра и не потерять тапки.</span>
+        </div>
+
+        <!-- Адрес -->
+        <div class="address-block">
+            <div style="font-size:12px; color:#8877aa;">ШТАБ-КВАРТИРА</div>
+            <div class="addr">🏠 Филиппа Лукина, 9, кв.</div>
+            <div class="note">(вспомнишь какая — молодец, агент)</div>
+        </div>
+
+        <!-- Цитата -->
+        <div class="quote-telegram">
+            📱 <span>«Приемный ребенок Павла Дурова»</span> — под Telegram
+        </div>
+
+        <!-- БЛОК ВОПРОСОВ ДА/НЕТ -->
+        <div class="questions-block" id="questionsBlock">
+            <div class="q-title">🔍 КОНТРОЛЬНЫЙ ОПРОС</div>
+
+            <!-- Вопрос 1 -->
+            <div class="question-item" data-q="1">
+                <div class="q-text">🛌 Ты будешь спать в ночь с 22 на 23 июля?</div>
+                <div class="q-buttons">
+                    <button class="btn-yes" data-answer="yes">Да</button>
+                    <button class="btn-no" data-answer="no">Нет</button>
+                </div>
+                <div class="q-feedback" id="fb1"></div>
+            </div>
+
+            <!-- Вопрос 2 -->
+            <div class="question-item" data-q="2">
+                <div class="q-text">🌸 Феня — твоя подруга?</div>
+                <div class="q-buttons">
+                    <button class="btn-yes" data-answer="yes">Да</button>
+                    <button class="btn-no" data-answer="no">Нет</button>
+                </div>
+                <div class="q-feedback" id="fb2"></div>
+            </div>
+
+            <!-- Вопрос 3 -->
+            <div class="question-item" data-q="3">
+                <div class="q-text">🍥 Ты знаешь кто такой Наруто?</div>
+                <div class="q-buttons">
+                    <button class="btn-yes" data-answer="yes">Да</button>
+                    <button class="btn-no" data-answer="no">Нет</button>
+                </div>
+                <div class="q-feedback" id="fb3"></div>
+            </div>
+
+            <!-- Вопрос 4 -->
+            <div class="question-item" data-q="4">
+                <div class="q-text">👨‍👦 Феня — приёмный ребенок Лань Ван Цзы и Вей У Сяня?</div>
+                <div class="q-buttons">
+                    <button class="btn-yes" data-answer="yes">Да</button>
+                    <button class="btn-no" data-answer="no">Нет</button>
+                </div>
+                <div class="q-feedback" id="fb4"></div>
+            </div>
+
+            <!-- Вопрос 5 -->
+            <div class="question-item" data-q="5">
+                <div class="q-text">👶 У Фени есть дети? (Лука, Хёна, Иван, Тилл, Мизи и Суа)</div>
+                <div class="q-buttons">
+                    <button class="btn-yes" data-answer="yes">Да</button>
+                    <button class="btn-no" data-answer="no">Нет</button>
+                </div>
+                <div class="q-feedback" id="fb5"></div>
+            </div>
+
+            <!-- Вопрос 6 -->
+            <div class="question-item" data-q="6">
+                <div class="q-text">🤓 Топлес (умный человек в очках) — дебил?</div>
+                <div class="q-buttons">
+                    <button class="btn-yes" data-answer="yes">Да</button>
+                    <button class="btn-no" data-answer="no">Нет</button>
+                </div>
+                <div class="q-feedback" id="fb6"></div>
+            </div>
+
+            <div style="color:#665588; font-size:12px; text-align:center; margin-top:6px;">✧ нажми на ответ — получишь реакцию ✧</div>
+        </div>
+
+        <!-- Родители -->
+        <div class="parents-note">
+            👪 <strong>Внимание, родственники!</strong><br>
+            23 июля в <strong>12:00 дня</strong> — приглашаются родители.<br>
+            (будет чай и разбор полётов)
+        </div>
+
+        <!-- скрытая кнопка сброса -->
+        <button class="logout-btn" id="logoutBtn">↺ выйти из тени</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // --- Элементы ---
+        const loginScreen = document.getElementById('loginScreen');
+        const mainScreen = document.getElementById('mainScreen');
+        const nameInput = document.getElementById('ninjaNameInput');
+        const enterBtn = document.getElementById('enterBtn');
+        const displayName = document.getElementById('displayName');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // --- Переключение на главный экран ---
+        function enterMainScreen() {
+            let name = nameInput.value.trim();
+            if (!name) {
+                name = 'Анонимный ниндзя';
+            }
+            // обрезаем до 20 символов
+            if (name.length > 20) name = name.substring(0, 18) + '..';
+            displayName.textContent = name;
+            loginScreen.style.display = 'none';
+            mainScreen.style.display = 'flex';
+            // Запускаем таймер
+            updateTimer();
+            // Сохраняем имя в localStorage чтобы не пропало при обновлении
+            try { localStorage.setItem('ninjaName', name); } catch(e) {}
+        }
+
+        // --- Обработка входа ---
+        enterBtn.addEventListener('click', enterMainScreen);
+        nameInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') enterMainScreen();
+        });
+
+        // --- Выход (сброс) ---
+        logoutBtn.addEventListener('click', () => {
+            loginScreen.style.display = 'flex';
+            mainScreen.style.display = 'none';
+            nameInput.value = '';
+            try { localStorage.removeItem('ninjaName'); } catch(e) {}
+            // Сбросить все фидбеки
+            document.querySelectorAll('.q-feedback').forEach(el => el.innerHTML = '');
+        });
+
+        // --- Проверяем, может уже залогинены (если обновили) ---
+        try {
+            const saved = localStorage.getItem('ninjaName');
+            if (saved) {
+                displayName.textContent = saved;
+                loginScreen.style.display = 'none';
+                mainScreen.style.display = 'flex';
+                updateTimer();
+            }
+        } catch(e) {}
+
+        // ========== ТАЙМЕР (Москва) ==========
+        function updateTimer() {
+            const now = new Date();
+            // Целевая дата: 23 июля 2026 00:00 по Москве
+            const target = new Date(2026, 6, 23, 0, 0, 0); // месяц 6 = июль
+            const diff = target.getTime() - now.getTime();
+
+            if (diff <= 0) {
+                timerDisplay.textContent = '🎉 НАСТУПИЛО!';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            let parts = [];
+            if (days > 0) parts.push(days + 'д');
+            parts.push(String(hours).padStart(2, '0') + 'ч');
+            parts.push(String(minutes).padStart(2, '0') + 'м');
+            parts.push(String(seconds).padStart(2, '0') + 'с');
+            timerDisplay.textContent = parts.join(' ');
+        }
+
+        // Обновляем таймер каждую секунду
+        setInterval(updateTimer, 1000);
+
+        // ========== ВОПРОСЫ ДА / НЕТ ==========
+        const feedbacks = {
+            '1': { yes: '🥰 Ты умничка! Спать — святое.', no: '🧐 Сомнительно... но ты же выживешь?' },
+            '2': { yes: '🌸 Да, Феня — твоя подруга! Ты умничка! 🤭', no: '🤨 Сомнительно... перепроверь.' },
+            '3': { yes: '🍥 Да, знаешь! Ты умничка! (рамен одобряет)', no: '😶 Сомнительно... Наруто бы расстроился.' },
+            '4': { yes: '👨‍👦 Да, это канон! Ты умничка! 🤭', no: '🤔 Сомнительно... пересмотри архив.' },
+            '5': { yes: '👶 Да, у Фени есть дети! Ты умничка! 🤭', no: '🧐 Сомнительно... а кто тогда все эти?' },
+            '6': { yes: '🤓 Да, Топлес — дебил! Ты умничка! 🤭', no: '🧐 Сомнительно... ну, спорно.' }
+        };
+
+        document.querySelectorAll('.question-item').forEach(item => {
+            const qId = item.dataset.q;
+            const feedbackEl = document.getElementById('fb' + qId);
+            const yesBtn = item.querySelector('.btn-yes');
+            const noBtn = item.querySelector('.btn-no');
+
+            function handleAnswer(answer) {
+                const data = feedbacks[qId];
+                if (!data) return;
+                let msg = '';
+                if (answer === 'yes') {
+                    msg = data.yes;
+                } else {
+                    msg = data.no;
+                }
+                feedbackEl.innerHTML = '💬 ' + msg;
+                // маленькая анимация
+                feedbackEl.style.opacity = '0';
+                setTimeout(() => { feedbackEl.style.opacity = '1'; }, 30);
+            }
+
+            yesBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                handleAnswer('yes');
+            });
+            noBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                handleAnswer('no');
+            });
+        });
+
+        // ========== Дополнительно: автофокус на поле ввода ==========
+        nameInput.focus();
+
+        console.log('🥷 Ночь Ниндзя активирована! Приятного использования.');
+    })();
+</script>
+
+</body>
+</html>
