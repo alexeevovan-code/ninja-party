@@ -34,7 +34,6 @@
             overflow: hidden;
         }
 
-        /* Аниме-звёздочки фон */
         .container::before {
             content: '';
             position: absolute;
@@ -163,7 +162,6 @@
             z-index: 2;
         }
 
-        /* Шапка */
         .header {
             display: flex;
             justify-content: space-between;
@@ -201,7 +199,6 @@
             font-size: 16px;
         }
 
-        /* Текст миссии */
         .mission-text {
             background: rgba(20, 10, 35, 0.7);
             border-left: 4px solid #ff44aa;
@@ -258,7 +255,6 @@
             color: #ffaa88;
         }
 
-        /* Блок вопросов */
         .questions-block {
             background: #141025;
             border-radius: 28px;
@@ -330,10 +326,6 @@
             color: #ffcc88;
         }
 
-        .q-feedback .cute { color: #ff99cc; }
-        .q-feedback .sus { color: #99ccff; }
-
-        /* Родители */
         .parents-note {
             background: #1f1428;
             border-radius: 20px;
@@ -348,28 +340,6 @@
             color: #ffbb77;
         }
 
-        /* Кнопка выхода (скрытая) */
-        .logout-btn {
-            background: transparent;
-            border: 1px solid #443355;
-            color: #665577;
-            padding: 8px;
-            border-radius: 40px;
-            font-size: 12px;
-            margin-top: 6px;
-            cursor: pointer;
-            width: fit-content;
-            align-self: center;
-        }
-
-        /* Адаптив */
-        @media (max-width: 420px) {
-            .container { padding: 16px; }
-            #loginScreen h1 { font-size: 28px; }
-            .btn-primary { font-size: 16px; padding: 12px 20px; }
-            .question-item .q-text { font-size: 14px; }
-        }
-         /* Кнопка ДАЛЬШЕ */
         .btn-next {
             background: linear-gradient(135deg, #ff44aa, #cc44ff);
             border: none;
@@ -391,6 +361,51 @@
             transform: scale(0.95);
             box-shadow: 0 4px 15px rgba(200, 50, 200, 0.2);
         }
+
+        .chat-link-btn {
+            display: inline-block;
+            padding: 16px 30px;
+            border-radius: 60px;
+            font-size: 18px;
+            font-weight: 900;
+            color: #fff;
+            text-decoration: none;
+            letter-spacing: 1px;
+            box-shadow: 0 0 30px rgba(153, 68, 255, 0.3);
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .chat-link-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(153, 68, 255, 0.2);
+        }
+
+        .logout-btn {
+            background: transparent;
+            border: 1px solid #443355;
+            color: #665577;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 12px;
+            margin-top: 6px;
+            cursor: pointer;
+            width: fit-content;
+            align-self: center;
+        }
+
+        @media (max-width: 420px) {
+            .container { padding: 16px; }
+            #loginScreen h1 { font-size: 28px; }
+            .btn-primary { font-size: 16px; padding: 12px 20px; }
+            .question-item .q-text { font-size: 14px; }
+            .chat-link-btn { font-size: 16px; padding: 14px 20px; }
+        }
     </style>
 </head>
 <body>
@@ -411,13 +426,11 @@
 
     <!-- ===== ОСНОВНОЙ ЭКРАН ===== -->
     <div id="mainScreen">
-        <!-- Шапка -->
         <div class="header">
             <div class="ninja-name-display">🥷 <span id="displayName">—</span></div>
             <div class="timer-box">⏳ <span id="timerDisplay">—</span></div>
         </div>
 
-        <!-- Миссия -->
         <div class="mission-text">
             <strong>📜 Задание:</strong> Явиться <span class="highlight">22 июля в 17:00</span>.<br>
             Вооружение: <strong>пижама, зубная щётка, паста</strong> и боевое настроение.<br>
@@ -425,79 +438,69 @@
             <span style="color:#bb99dd;">⚡ Выжить до утра и не потерять тапки.</span>
         </div>
 
-        <!-- Адрес -->
         <div class="address-block">
             <div style="font-size:12px; color:#8877aa;">ШТАБ-КВАРТИРА</div>
-            <div class="addr">🏠 Филиппа Лукина, 9, кв. 407</div>
-            <div class="note">(Шутки шуткам,Смех смехом...)</div>
+            <div class="addr">🏠 Филиппа Лукина, 9, кв.</div>
+            <div class="note">(вспомнишь какая — молодец, агент)</div>
         </div>
 
-        <!-- Цитата -->
         <div class="quote-telegram">
-            📱 <span>«Охаёшеньки даттебаёшеньки🌸»</span> —
-            КОД-СЛОВО на входе. Запомни!
+            📱 <span>«Приемный ребенок Павла Дурова»</span> — под Telegram
         </div>
 
-        <!-- БЛОК ВОПРОСОВ ДА/НЕТ -->
         <div class="questions-block" id="questionsBlock">
             <div class="q-title">🔍 КОНТРОЛЬНЫЙ ОПРОС</div>
 
-            <!-- Вопрос 1 -->
             <div class="question-item" data-q="1">
-                <div class="q-text">🛌 Ты НЕ будешь спать в ночь с 22 на 23 июля?</div>
+                <div class="q-text">🛌 Ты будешь спать в ночь с 22 на 23 июля?</div>
                 <div class="q-buttons">
                     <button class="btn-yes" data-answer="yes">Да</button>
-                    <button class="btn-no" data-answer="no">Нет</button>
+                    <button class="btn-no" data-answer="no">Сомнительно. Меняй</button>
                 </div>
                 <div class="q-feedback" id="fb1"></div>
             </div>
 
-            <!-- Вопрос 2 -->
             <div class="question-item" data-q="2">
-                <div class="q-text">🌸 Феня - твоя СЛПВМ?</div>
+                <div class="q-text">🌸 Феня — твоя подруга?</div>
                 <div class="q-buttons">
                     <button class="btn-yes" data-answer="yes">Да</button>
-                    <button class="btn-no" data-answer="no">Нет</button>
+                    <button class="btn-no" data-answer="no">Сомнительно. Меняй</button>
                 </div>
                 <div class="q-feedback" id="fb2"></div>
             </div>
 
-            <!-- Вопрос 3 -->
             <div class="question-item" data-q="3">
                 <div class="q-text">🍥 Ты знаешь кто такой Наруто?</div>
                 <div class="q-buttons">
                     <button class="btn-yes" data-answer="yes">Да</button>
-                    <button class="btn-no" data-answer="no">Нет</button>
+                    <button class="btn-no" data-answer="no">Сомнительно. Меняй</button>
                 </div>
                 <div class="q-feedback" id="fb3"></div>
             </div>
 
-            <!-- Вопрос 4 -->
             <div class="question-item" data-q="4">
-                <div class="q-text">👨‍👦 Феня - приёмный ребенок Лань Ван Цзы и Вей У Сяня?</div>
+                <div class="q-text">👨‍👦 Феня — приёмный ребенок Лань Ван Цзы и Вей У Сяня?</div>
                 <div class="q-buttons">
                     <button class="btn-yes" data-answer="yes">Да</button>
-                    <button class="btn-no" data-answer="no">Нет</button>
+                    <button class="btn-no" data-answer="no">Сомнительно. Меняй</button>
                 </div>
                 <div class="q-feedback" id="fb4"></div>
             </div>
 
-            <!-- Вопрос 5 -->
             <div class="question-item" data-q="5">
                 <div class="q-text">👶 У Фени есть дети? (Лука, Хёна, Иван, Тилл, Мизи и Суа)</div>
                 <div class="q-buttons">
                     <button class="btn-yes" data-answer="yes">Да</button>
-                    <button class="btn-no" data-answer="no">Нет</button>
+                    <button class="btn-no" data-answer="no">Сомнительно. Меняй</button>
                 </div>
                 <div class="q-feedback" id="fb5"></div>
             </div>
 
-            <!-- Вопрос 6 -->
             <div class="question-item" data-q="6">
                 <div class="q-text">🤓 Топлес (умный человек в очках) — дебил?</div>
                 <div class="q-buttons">
                     <button class="btn-yes" data-answer="yes">Да</button>
-                    <button class="btn-no" data-answer="no">Нет</button>
+                    <button class="btn-no" data-answer="no">Сомнительно. Меняй</button>
                 </div>
                 <div class="q-feedback" id="fb6"></div>
             </div>
@@ -505,40 +508,36 @@
             <div style="color:#665588; font-size:12px; text-align:center; margin-top:6px;">✧ нажми на ответ — получишь реакцию ✧</div>
         </div>
 
-        <!-- Родители -->       
-        <!-- КНОПКА ДАЛЬШЕ -->
+        <div class="parents-note">
+            👪 <strong>Внимание, родственники!</strong><br>
+            23 июля в <strong>12:00 дня</strong> — приглашаются родители.<br>
+            (будет чай и разбор полётов)
+        </div>
+
         <button class="btn-next" id="nextBtn">ДАЛЬШЕ ➜</button>
 
-        <!-- ===== СКРЫТАЯ СТРАНИЦА СО ССЫЛКАМИ ===== -->
         <div id="linksPage" style="display: none; margin-top: 20px;">
             <div style="background: #141025; border-radius: 28px; padding: 20px 16px; border: 2px solid #aa66ff; text-align: center;">
                 <div style="color: #cc99ff; font-size: 18px; font-weight: 800; margin-bottom: 16px;">🔗 ВЫБЕРИ ЧАТ</div>
                 
-                <a href="https://t.me/+vZX0WknjMLs1NGI6" target="_blank" class="chat-link-btn" style="display: block; margin-bottom: 12px; background: linear-gradient(135deg, #2299ff, #6644ff);">
+                <a href="https://t.me/+XXXXXXXXXXX" target="_blank" class="chat-link-btn" style="display: block; margin-bottom: 12px; background: linear-gradient(135deg, #2299ff, #6644ff);">
                     📱 Ниндзя-чат Telegram
                 </a>
                 
-                <a href="https://max.ru/join/0bNElJ_ZbMqBSzuZBbkFM2SLSVhE0ZBObzWchmVY7TQ" target="_blank" class="chat-link-btn" style="display: block; background: linear-gradient(135deg, #25D366, #128C7E);">
+                <a href="https://chat.whatsapp.com/XXXXXXXXXXX" target="_blank" class="chat-link-btn" style="display: block; background: linear-gradient(135deg, #25D366, #128C7E);">
                     💬 Ниндзя-чат в WhatsApp
                 </a>
                 
                 <div style="color: #665588; font-size: 12px; margin-top: 12px;">✧ нажми на нужный чат ✧</div>
             </div>
         </div>
-        <div class="parents-note">
-            👪 <strong>Внимание, родственники!</strong><br>
-            23 июля в <strong>12:00 дня</strong> — приглашаются родители.<br>
-            (будет чай и хавка)
-        </div>
 
-        <!-- скрытая кнопка сброса -->
         <button class="logout-btn" id="logoutBtn">↺ выйти из тени</button>
     </div>
 </div>
 
 <script>
     (function() {
-        // --- Элементы ---
         const loginScreen = document.getElementById('loginScreen');
         const mainScreen = document.getElementById('mainScreen');
         const nameInput = document.getElementById('ninjaNameInput');
@@ -547,40 +546,30 @@
         const timerDisplay = document.getElementById('timerDisplay');
         const logoutBtn = document.getElementById('logoutBtn');
 
-        // --- Переключение на главный экран ---
         function enterMainScreen() {
             let name = nameInput.value.trim();
-            if (!name) {
-                name = 'Анонимный ниндзя';
-            }
-            // обрезаем до 20 символов
+            if (!name) name = 'Анонимный ниндзя';
             if (name.length > 20) name = name.substring(0, 18) + '..';
             displayName.textContent = name;
             loginScreen.style.display = 'none';
             mainScreen.style.display = 'flex';
-            // Запускаем таймер
             updateTimer();
-            // Сохраняем имя в localStorage чтобы не пропало при обновлении
             try { localStorage.setItem('ninjaName', name); } catch(e) {}
         }
 
-        // --- Обработка входа ---
         enterBtn.addEventListener('click', enterMainScreen);
         nameInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') enterMainScreen();
         });
 
-        // --- Выход (сброс) ---
         logoutBtn.addEventListener('click', () => {
             loginScreen.style.display = 'flex';
             mainScreen.style.display = 'none';
             nameInput.value = '';
             try { localStorage.removeItem('ninjaName'); } catch(e) {}
-            // Сбросить все фидбеки
             document.querySelectorAll('.q-feedback').forEach(el => el.innerHTML = '');
         });
 
-        // --- Проверяем, может уже залогинены (если обновили) ---
         try {
             const saved = localStorage.getItem('ninjaName');
             if (saved) {
@@ -591,11 +580,9 @@
             }
         } catch(e) {}
 
-        // ========== ТАЙМЕР (Москва) ==========
         function updateTimer() {
             const now = new Date();
-            // Целевая дата: 23 июля 2026 00:00 по Москве
-            const target = new Date(2026, 6, 23, 0, 0, 0); // месяц 6 = июль
+            const target = new Date(2026, 6, 23, 0, 0, 0);
             const diff = target.getTime() - now.getTime();
 
             if (diff <= 0) {
@@ -616,10 +603,8 @@
             timerDisplay.textContent = parts.join(' ');
         }
 
-        // Обновляем таймер каждую секунду
         setInterval(updateTimer, 1000);
 
-        // ========== ВОПРОСЫ ДА / НЕТ ==========
         const feedbacks = {
             '1': { yes: '🥰 Красава. Нефиг спать.', no: 'Пупупупупупу..Подумай ещё раз' },
             '2': { yes: '🌸 Шааааришь 🤭', no: '🤨 ОКАК.' },
@@ -638,14 +623,8 @@
             function handleAnswer(answer) {
                 const data = feedbacks[qId];
                 if (!data) return;
-                let msg = '';
-                if (answer === 'yes') {
-                    msg = data.yes;
-                } else {
-                    msg = data.no;
-                }
+                let msg = answer === 'yes' ? data.yes : data.no;
                 feedbackEl.innerHTML = '💬 ' + msg;
-                // маленькая анимация
                 feedbackEl.style.opacity = '0';
                 setTimeout(() => { feedbackEl.style.opacity = '1'; }, 30);
             }
@@ -660,12 +639,6 @@
             });
         });
 
-        // ========== Дополнительно: автофокус на поле ввода ==========
-        nameInput.focus();
-
-        console.log('🥷 Ночь Ниндзя активирована! Приятного использования.');
-    })();    
-    // ===== КНОПКА ДАЛЬШЕ =====
         const nextBtn = document.getElementById('nextBtn');
         const linksPage = document.getElementById('linksPage');
         let linksVisible = false;
@@ -679,12 +652,15 @@
                 linksPage.style.display = 'block';
                 nextBtn.textContent = '✕ СВЕРНУТЬ';
                 linksVisible = true;
-                // Плавный скролл к ссылкам
                 setTimeout(() => {
                     linksPage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 100);
             }
         });
+
+        nameInput.focus();
+        console.log('🥷 Ночь Ниндзя активирована!');
+    })();
 </script>
 
 </body>
