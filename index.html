@@ -369,6 +369,28 @@
             .btn-primary { font-size: 16px; padding: 12px 20px; }
             .question-item .q-text { font-size: 14px; }
         }
+         /* Кнопка ДАЛЬШЕ */
+        .btn-next {
+            background: linear-gradient(135deg, #ff44aa, #cc44ff);
+            border: none;
+            border-radius: 60px;
+            padding: 14px 30px;
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 2px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(200, 50, 200, 0.4);
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 6px;
+            text-transform: uppercase;
+        }
+
+        .btn-next:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 15px rgba(200, 50, 200, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -483,7 +505,26 @@
             <div style="color:#665588; font-size:12px; text-align:center; margin-top:6px;">✧ нажми на ответ — получишь реакцию ✧</div>
         </div>
 
-        <!-- Родители -->
+        <!-- Родители -->       
+        <!-- КНОПКА ДАЛЬШЕ -->
+        <button class="btn-next" id="nextBtn">ДАЛЬШЕ ➜</button>
+
+        <!-- ===== СКРЫТАЯ СТРАНИЦА СО ССЫЛКАМИ ===== -->
+        <div id="linksPage" style="display: none; margin-top: 20px;">
+            <div style="background: #141025; border-radius: 28px; padding: 20px 16px; border: 2px solid #aa66ff; text-align: center;">
+                <div style="color: #cc99ff; font-size: 18px; font-weight: 800; margin-bottom: 16px;">🔗 ВЫБЕРИ ЧАТ</div>
+                
+                <a href="https://t.me/+XXXXXXXXXXX" target="_blank" class="chat-link-btn" style="display: block; margin-bottom: 12px; background: linear-gradient(135deg, #2299ff, #6644ff);">
+                    📱 Ниндзя-чат Telegram
+                </a>
+                
+                <a href="https://chat.whatsapp.com/XXXXXXXXXXX" target="_blank" class="chat-link-btn" style="display: block; background: linear-gradient(135deg, #25D366, #128C7E);">
+                    💬 Ниндзя-чат в WhatsApp
+                </a>
+                
+                <div style="color: #665588; font-size: 12px; margin-top: 12px;">✧ нажми на нужный чат ✧</div>
+            </div>
+        </div>
         <div class="parents-note">
             👪 <strong>Внимание, родственники!</strong><br>
             23 июля в <strong>12:00 дня</strong> — приглашаются родители.<br>
